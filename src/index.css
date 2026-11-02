@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html { background: #0e1014; color-scheme: dark; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { @apply bg-bg text-ink font-sans; }
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  ::selection { background: rgba(74, 222, 128, 0.25); }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60; }
+  .btn-primary { @apply btn bg-accent text-[#052e16] hover:bg-accentStrong; }
+  .btn-ghost { @apply btn border border-line bg-surface text-ink hover:bg-surface2; }
+  .card { @apply rounded-2xl border border-line bg-surface; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.12em] text-accent; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
