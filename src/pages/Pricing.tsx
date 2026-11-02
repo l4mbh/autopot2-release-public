@@ -1,129 +1,95 @@
-import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Check, KeyRound, MessageCircle, Minus } from 'lucide-react';
+import { DISCORD, featureGroups, plans } from '../site';
+import { SectionHead, TierBadge } from '../components/ui';
 
-const plans = [
-  {
-    name: '30 Days',
-    price: 7,
-    duration: '30 days',
-    features: [
-      'Full access to all features',
-      'Automatic updates',
-      'Discord support',
-      'Regular feature updates',
-      'Safe and secure',
-    ],
-    popular: false,
-  },
-  {
-    name: '60 Days',
-    price: 10,
-    duration: '60 days',
-    features: [
-      'Full access to all features',
-      'Automatic updates',
-      'Priority Discord support',
-      'Regular feature updates',
-      'Safe and secure',
-      'Best value for money',
-    ],
-    popular: true,
-  },
-  {
-    name: '90 Days',
-    price: 20,
-    duration: '90 days',
-    features: [
-      'Full access to all features',
-      'Automatic updates',
-      'VIP Discord support',
-      'Regular feature updates',
-      'Safe and secure',
-      'Extended access',
-      'Early access to new features',
-    ],
-    popular: false,
-  },
-];
+const proPerks = ['Everything in Free', 'Radar with campaign guide', 'In-game Prices from poe.ninja', 'Utility flasks & cure ailments', 'Profiles & gamepad support'];
 
 export function Pricing() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Simple, Transparent Pricing
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Choose the plan that works best for you. All plans include full access to features.
-          </p>
-        </div>
+    <>
+      <section className="mx-auto max-w-page px-4 pb-12 pt-16 sm:px-6">
+        <SectionHead center eyebrow="Pricing" title="Free to start. PRO when you want more."
+          desc="Auto Pot is free for everyone. A PRO key unlocks Radar, Prices and the advanced flask tools — same app, nothing extra to install." />
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-2 ${
-                plan.popular
-                  ? 'border-blue-600 dark:border-blue-400 scale-105'
-                  : 'border-gray-200 dark:border-gray-700'
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </span>
-                </div>
-              )}
+        <div className="mt-12 grid gap-5 lg:grid-cols-4">
+          {/* Free */}
+          <div className="card flex flex-col p-6">
+            <h3 className="text-lg font-semibold">Free</h3>
+            <p className="mt-1 text-sm text-ink3">Forever</p>
+            <p className="mt-5 text-4xl font-bold tabular">$0</p>
+            <ul className="mt-6 flex-1 space-y-2.5 text-sm text-ink2">
+              {['Life, Mana & ES auto pot', 'Reads your flask belt', 'System tray & show/hide key', 'Automatic updates'].map(t => (
+                <li key={t} className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 flex-none text-accent" aria-hidden />{t}</li>
+              ))}
+            </ul>
+            <Link to="/download" className="btn-ghost mt-8 w-full">Download</Link>
+          </div>
 
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  {plan.name}
-                </h3>
-                <div className="flex items-baseline mb-6">
-                  <span className="text-5xl font-extrabold text-gray-900 dark:text-white">
-                    ${plan.price}
-                  </span>
-                  <span className="text-gray-600 dark:text-gray-400 ml-2">/ {plan.duration}</span>
-                </div>
-
-                <button
-                  className={`w-full py-3 px-6 rounded-lg font-semibold transition-all mb-8 ${
-                    plan.popular
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
-                      : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
-                  }`}
-                >
-                  Get Started
-                </button>
-
-                <ul className="space-y-4">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start">
-                      <Check className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* Gói PRO */}
+          {plans.map(p => (
+            <div key={p.name} className={`card relative flex flex-col p-6 ${p.popular ? 'border-pro/60 ring-1 ring-pro/40' : ''}`}>
+              {p.note && <span className="absolute -top-3 left-6 rounded-full bg-pro px-3 py-0.5 text-xs font-semibold text-[#1e0b2e]">{p.note}</span>}
+              <h3 className="flex items-center gap-2 text-lg font-semibold">PRO <span className="text-sm font-normal text-ink3">· {p.name}</span></h3>
+              <p className="mt-1 text-sm text-ink3">${(p.price / p.days * 30).toFixed(2)} per 30 days</p>
+              <p className="mt-5 text-4xl font-bold tabular">${p.price}</p>
+              <ul className="mt-6 flex-1 space-y-2.5 text-sm text-ink2">
+                {proPerks.map(t => <li key={t} className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 flex-none text-pro" aria-hidden />{t}</li>)}
+              </ul>
+              <a href={DISCORD} target="_blank" rel="noopener noreferrer" className={`${p.popular ? 'btn bg-pro text-[#1e0b2e] hover:bg-pro/90' : 'btn-ghost'} mt-8 w-full`}>
+                Get {p.name}
+              </a>
             </div>
           ))}
         </div>
+      </section>
 
-        <div className="mt-16 text-center">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            Need help choosing? Join our Discord community for assistance.
-          </p>
-          <a
-            href="https://discord.gg/yourdiscord"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
-          >
-            Contact Support
-          </a>
+      {/* Cách mua + kích hoạt */}
+      <section className="mx-auto max-w-page px-4 pb-16 sm:px-6">
+        <div className="card grid gap-6 p-6 sm:p-8 md:grid-cols-3">
+          {[
+            { icon: MessageCircle, title: '1. Get a key on Discord', desc: 'Join our Discord and open a ticket for the plan you want. You receive a license key.' },
+            { icon: KeyRound, title: '2. Enter it in the app', desc: 'In AutoPot go to Settings → License → Enter license key. PRO pages unlock at once.' },
+            { icon: Check, title: '3. Keep playing', desc: 'The key is bound to your PC. AutoPot reminds you a few days before it expires.' },
+          ].map(s => (
+            <div key={s.title}>
+              <s.icon className="h-5 w-5 text-accent" aria-hidden />
+              <h3 className="mt-3 font-semibold">{s.title}</h3>
+              <p className="mt-1 text-sm text-ink2">{s.desc}</p>
+            </div>
+          ))}
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* Bảng so sánh — sinh từ danh sách tính năng, luôn khớp trang Features */}
+      <section className="border-t border-line bg-raised">
+        <div className="mx-auto max-w-page px-4 py-16 sm:px-6">
+          <SectionHead title="Free vs PRO" desc="Exactly what each option includes." />
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-line">
+            <table className="w-full min-w-[520px] text-left text-sm">
+              <thead className="bg-surface text-ink2">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">Feature</th>
+                  <th className="w-28 px-5 py-3 text-center font-semibold">Free</th>
+                  <th className="w-28 px-5 py-3 text-center font-semibold text-pro">PRO</th>
+                </tr>
+              </thead>
+              {featureGroups.map(g => (
+                <tbody key={g.id} className="border-t border-line">
+                  <tr><th colSpan={3} className="bg-surface/60 px-5 py-2 text-xs font-semibold uppercase tracking-wider text-ink3">{g.title}</th></tr>
+                  {g.items.map(i => (
+                    <tr key={i.title} className="border-t border-line/60">
+                      <td className="px-5 py-3"><span className="font-medium">{i.title}</span><span className="ml-2 align-middle sm:hidden"><TierBadge tier={i.tier} /></span></td>
+                      <td className="px-5 py-3 text-center">{i.tier === 'free' ? <Check className="mx-auto h-4 w-4 text-accent" aria-label="Included" /> : <Minus className="mx-auto h-4 w-4 text-ink3" aria-label="Not included" />}</td>
+                      <td className="px-5 py-3 text-center"><Check className="mx-auto h-4 w-4 text-pro" aria-label="Included" /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              ))}
+            </table>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
